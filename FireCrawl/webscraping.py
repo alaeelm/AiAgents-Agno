@@ -4,13 +4,17 @@ import time
 import requests
 from bs4 import BeautifulSoup
 from firecrawl import FirecrawlApp
+from dotenv import load_dotenv
 
+
+load_dotenv()
 
 AIRTABLE_API_KEY = 'patKVtVdOrVnWTJEV.a0cc49e69bbaf220dace89ac784db7491f7616456e5c7d86ca24914cc71f7d46'
 AIRTABLE_BASE_ID = 'appdy8gyjm6dcXfvp'
 AIRTABLE_TABLE_ID = 'tblyU5DpVM8lxTaEY'
+FIRECRAWL_API_KEY = os.getenv("FIRECRAWL_API_KEY")
 
-firecrawl = FirecrawlApp(api_key="fc-280f4641c9c64d93b69338877636f2bc")
+firecrawl = FirecrawlApp(api_key=FIRECRAWL_API_KEY)
 
 url = "https://www.century21.fr/annonces/f/achat/v-paris/"
 
@@ -62,7 +66,7 @@ def split_listings(text):
 
     
 
-scrape_result = firecrawl.scrape_url(url, formats=["html"])
+scrape_result = firecrawl.scrape(url, formats=["html"])
 
 soup = BeautifulSoup(scrape_result.html, "html.parser")
 plain_text = soup.get_text()
