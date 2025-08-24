@@ -1,12 +1,15 @@
 from notion_client import Client
 import os
 from agno.agent import Agent
-from agno.models.xai import xAI
+from agno.models.google import Gemini
+from dotenv import load_dotenv
+
+load_dotenv()
 
 notion = Client(auth=os.getenv("NOTION_TOKEN"))
 
 def return_knowledge_base(agent, query, num_documents=None, **kwargs):
-    database_id = "201954aae2a0809c8c1dd54f3b5037b8"
+    database_id = "259c7ebb1297807cab5ddf22950338cc"
     
     try:
         results = notion.databases.query(database_id=database_id)
@@ -69,10 +72,11 @@ def return_knowledge_base(agent, query, num_documents=None, **kwargs):
 
 # Set up agent
 agent = Agent(
-    model=xAI(id="grok-3-mini"),
+    model=Gemini(id="gemini-2.5-flash"),
     knowledge=None,
     search_knowledge=True,
-    retriever=return_knowledge_base
+    retriever=return_knowledge_base,
+    show_tool_calls=True
 )
 
 # Test
