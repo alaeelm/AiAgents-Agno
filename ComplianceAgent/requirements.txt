@@ -1,0 +1,8 @@
+agno
+phidata
+google-generativeai
+python-docx
+requests
+beautifulsoup4
+lxml
+regex
